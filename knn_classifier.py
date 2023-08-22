@@ -3,6 +3,7 @@ import cv2
 import os
 import argparse
 import imutils
+from imutils import contours
 import numpy as np
 from imutils import paths
 from sklearn.model_selection import train_test_split
@@ -91,19 +92,3 @@ test_image = cv2.imread("test-image.jpeg")
 test_vector = image_to_feature_vector(test_image)
 test_vector = np.array(test_vector)
 print(model.predict(test_vector.reshape(1, -1)))
-
-# pull fields
-
-
-def cleanImage(image, stage=0):
-    gray_image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-    topHat = cv2.morphologyEx(gray_image, cv2.MORPH_TOPHAT, kernel)
-    blackHat = cv2.morphologyEx(gray_image, cv2.MORPH_BLACKHAT, kernel)
-    add = cv2.add(gray_image, topHat)
-    subtract = cv2.subtract(add, blackHat)
-
-
-custom_config = r'--oem 4 --psm 6'
-image = cv2.cvtColor(test_image, cv2.COLOR_BGR2GRAY)
-print(pytesseract.image_to_string(image))
