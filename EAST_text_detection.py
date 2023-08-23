@@ -1,12 +1,16 @@
 
-import os
-import sys
+import re
 import numpy as np
 import cv2
 import time
+import argparse
 from imutils.object_detection import non_max_suppression
 import pytesseract
 from operator import itemgetter
+
+ap = argparse.ArgumentParser()
+ap.add_argument("-i", "--image", required=True, help="path to image")
+args = vars(ap.parse_args())
 
 
 def east_detect(image):
@@ -92,8 +96,6 @@ def east_detect(image):
     image_rois = []
     # loop over the bounding boxes
     for (startX, startY, endX, endY) in boxes:
-        # scale the bounding box coordinates based on the respective
-        # ratios
         startX = int(startX * rW)-10
         startY = int(startY * rH)-10
         endX = int(endX * rW)+10
@@ -104,24 +106,24 @@ def east_detect(image):
     return orig, image_rois
 
 
-image = cv2.imread("test-image.jpeg")
-
+image = cv2.imread(args["image"])
 (out_image, image_rois) = east_detect(image)
 
-text = []
-gray = cv2.cvtColor(out_image, cv2.COLOR_BGR2GRAY)
-gray = cv2.threshold(gray, 60, 225,
+text_list = []
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+gray = cv2.threshold(gray, 20, 225,
                      cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
-cv2.imshow("test", gray)
-cv2.waitKey(0)
 
-for image in image_rois:
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    gray = cv2.threshold(gray, 60, 225,
-                         cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
-    text.append(pytesseract.image_to_string(gray))
-    cv2.imshow("test", gray)
-    cv2.waitKey(0)
+for img in image_rois:
+    text_list.append(pytesseract.image_to_string(img))
 
-print(text)
+
+re_list = []
+for text in text_list:
+    if re.search("([0-9]){1,2}\/([0-9]){1,2}\/([0-9]){2,4}", text):
+        text.strip()
+        text = re.search(r"([0-9]){1,2}\/([0-9]){1,2}\/([0-9]){2,4}", text)
+        re_list.append(text.group())
+
+print(re_list)

@@ -9,7 +9,6 @@ from imutils import paths
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from PIL import Image
-import pytesseract
 
 
 def image_to_feature_vector(image, size=(32, 32)):
