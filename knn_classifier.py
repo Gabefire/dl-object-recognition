@@ -10,6 +10,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from PIL import Image
 
+"""
+Run the KNN model and then test ID to see if it can guess
+"""
+
 
 def image_to_feature_vector(image, size=(32, 32)):
     return cv2.resize(image, size).flatten()

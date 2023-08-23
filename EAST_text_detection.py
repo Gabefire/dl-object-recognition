@@ -8,6 +8,11 @@ from imutils.object_detection import non_max_suppression
 import pytesseract
 from operator import itemgetter
 
+"""
+Run the EAST deep learning model and then run ID through tesseract to pull dates
+"""
+
+
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=True, help="path to image")
 args = vars(ap.parse_args())
