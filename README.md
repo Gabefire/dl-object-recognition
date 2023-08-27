@@ -14,7 +14,7 @@ python3 text_detection.py --image test-image.jpeg
 
 ## KNN classifier
 
-Trained model on k nearest neighbors data located in the train folder. Evaluated accuracy with images being converted to raw pixels and images being converted to a histogram Once model was trained compared it to test-image.jpeg to figure out the most likely state.
+Trained model on k nearest neighbors data located in the train folder. Evaluated accuracy with images being converted to raw pixels and images being converted to a histogram once model was trained compared it to test-image.jpeg to figure out the most likely state.
 
 ```
 git clone https://github.com/Gabefire/dl-object-recognition.git

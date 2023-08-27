@@ -7,6 +7,7 @@ import argparse
 from imutils.object_detection import non_max_suppression
 import pytesseract
 from operator import itemgetter
+from util_func import find_date_fields
 
 """
 Run the EAST deep learning model and then run ID through tesseract to pull dates
@@ -124,11 +125,4 @@ for img in image_rois:
     text_list.append(pytesseract.image_to_string(img))
 
 
-re_list = []
-for text in text_list:
-    if re.search("([0-9]){1,2}\/([0-9]){1,2}\/([0-9]){2,4}", text):
-        text.strip()
-        text = re.search(r"([0-9]){1,2}\/([0-9]){1,2}\/([0-9]){2,4}", text)
-        re_list.append(text.group())
-
-print(re_list)
+print(find_date_fields(image_rois))
