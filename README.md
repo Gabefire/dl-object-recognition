@@ -1,6 +1,6 @@
 # Driver License Models
 
-Project to practice OCR and OpenCV. Used two machine learning models to gather different information from driver's license test image
+Project to practice OCR and OpenCV. Used a variety of methods to gather different information from driver's license test image
 
 ## EAST Text Detection
 
